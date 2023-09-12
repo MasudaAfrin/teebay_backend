@@ -5,3 +5,8 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+setting = {
+  categories: %w[ELECTRONICS FURNITURE HOME APPLIANCES SPORTING GOODS OUTDOOR TOYS],
+  rent_buy_options: %w[per_day per_hour per_month]
+}
+Setting.create!(app_setting: setting)
