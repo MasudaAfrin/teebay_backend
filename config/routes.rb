@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       post '/login', to: 'session#create'
       resources :users, only: [:create]
+      resources :products, only: [:index, :show, :create, :update, :destroy]
     end
   end
 end
