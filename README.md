@@ -1,24 +1,10 @@
 # README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This project assumed that you have docker installed.
 
 Things you may want to cover:
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* docker compose build
+* To Run: docker compose up
+* To access the container - docker exec -it teebay_backend-teebay-rails-1 bash
+* Documentation - https://documenter.getpostman.com/view/13503617/2s9YC4VZ7n
+* Video URL: https://drive.google.com/file/d/18dt5XNlRuXVuQVEkm9hKc_XN0ZaNLIqb/view
