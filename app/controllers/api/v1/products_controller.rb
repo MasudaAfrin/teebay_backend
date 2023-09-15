@@ -60,16 +60,38 @@ class Api::V1::ProductsController < ApplicationController
     render json: failed_response(e.message), status: :unprocessable_entity
   end
 
+  def category_options
+    categories = Setting.product_categories
+    render json: {
+      message: 'Successfully products are fetched!',
+      data: categories
+    }, status: :ok
+  rescue StandardError => e
+    Rails.logger.error("Product category option API failed: #{e.message}")
+    render json: failed_response(e.message), status: :unprocessable_entity
+  end
+
+  def price_options
+    price_options = Setting.price_options
+    render json: {
+      message: 'Successfully products are fetched!',
+      data: price_options
+    }, status: :ok
+  rescue StandardError => e
+    Rails.logger.error("Product category option API failed: #{e.message}")
+    render json: failed_response(e.message), status: :unprocessable_entity
+  end
+
   private
 
   def product_params
     params.permit(
     :title,
     :description,
-    :product_categories,
     :price,
-    :product_type,
-    :price_option
+    :rental_price,
+    :price_option,
+    product_categories: [],
     )
   end
 

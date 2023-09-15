@@ -16,7 +16,7 @@ class Setting < ApplicationRecord
       {
         id: index + 1,
         value: option,
-        label: option
+        label: option.humanize
       }
     end
   end
