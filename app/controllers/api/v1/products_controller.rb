@@ -24,10 +24,10 @@ class Api::V1::ProductsController < ApplicationController
     title = params[:title] || ''
     category = params[:category] || ''
     product_option = params[:product_option] || ''
-    price_range = params[:price_range] || []
+    price_minimum = params[:price_minimum] || ''
+    price_maximum = params[:price_maximum] || ''
     price_option = params[:price_option] || ''
-    # binding.irb
-    products = Product.search(title, category, product_option, price_range, price_option)
+    products = Product.search(title, category, product_option, [price_minimum, price_maximum], price_option)
     total = products.count
     products = products.paginate(page:, per_page:).order(id: :desc)
     render json: {

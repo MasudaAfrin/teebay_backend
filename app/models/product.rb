@@ -3,8 +3,8 @@ class Product < ApplicationRecord
 
   scope :search_by_title, -> (title) { where('lower(title) LIKE ?', "%#{title.downcase}%") }
   scope :search_by_category, -> (category) { where("product_categories @> ?", "{#{category}}") }
-  scope :search_by_price_range, -> (price_range) { where('price IN(?)', price_range) }
-  scope :search_by_rental_price_range, -> (price_range) { where('rental_price IN(?)', price_range) }
+  scope :search_by_price_range, -> (price_range) { where('price >= ? and price <= ?', price_range[0], price_range[1]) }
+  scope :search_by_rental_price_range, -> (price_range) { where('rental_price >= ? and rental_price <= ?', price_range[0], price_range[1]) }
   scope :search_by_price_option, -> (price_option) { where('price_option = ?', price_option) }
 
   def self.search(title, category, product_option, price_range, price_option)
