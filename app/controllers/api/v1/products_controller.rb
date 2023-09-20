@@ -2,9 +2,16 @@ class Api::V1::ProductsController < ApplicationController
   before_action :set_product, only: [:show, :update, :destroy]
 
   def index
+    page = params[:page] || 1
+    per_page = params[:per_page] || 2
+    total = Product.count
+    products = Product.paginate(page:, per_page:).order(id: :desc)
     render json: {
       message: 'Successfully products are fetched!',
-      data: Product.all.order(id: :desc).as_json
+      data: {
+        products:,
+        total:
+      }.as_json
     }, status: :ok
   rescue StandardError => e
     Rails.logger.error("Product index API failed: #{e.message}")
