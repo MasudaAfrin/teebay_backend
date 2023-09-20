@@ -18,6 +18,30 @@ class Api::V1::ProductsController < ApplicationController
     render json: failed_response(e.message), status: :unprocessable_entity
   end
 
+  def list
+    page = params[:page] || 1
+    per_page = params[:per_page] || 5
+    title = params[:title] || ''
+    category = params[:category] || ''
+    product_option = params[:product_option] || ''
+    price_range = params[:price_range] || []
+    price_option = params[:price_option] || ''
+    # binding.irb
+    products = Product.search(title, category, product_option, price_range, price_option)
+    total = products.count
+    products = products.paginate(page:, per_page:).order(id: :desc)
+    render json: {
+      message: 'Successfully products are fetched!',
+      data: {
+        products:,
+        total:
+      }.as_json
+    }, status: :ok
+  rescue StandardError => e
+    Rails.logger.error("Product browse API failed: #{e.message}")
+    render json: failed_response(e.message), status: :unprocessable_entity
+  end
+
   def show
     return render json: failed_response('Product not found'), status: :not_found unless @product.present?
 

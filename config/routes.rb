@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       resources :products, only: [:index, :show, :create, :update, :destroy] do
         get :category_options, path: '/category-options', on: :collection
         get :price_options, path: '/price-options', on: :collection
+        get :list, on: :collection
       end
     end
   end
