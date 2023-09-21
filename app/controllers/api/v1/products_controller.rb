@@ -118,28 +118,34 @@ class Api::V1::ProductsController < ApplicationController
     products = case current_tab
                when 'bought'
                  Product.joins(:line_items).where(
-                   'line_items.item_type = 1 and line_items.user_id = ? and line_items.owner_id != ?',
+                   'line_items.item_type = 1 and line_items.user_id = ? and line_items.item_owner_id != ?',
                    @current_user.id, @current_user.id
                  )
                when 'sold'
                  Product.joins(:line_items).where(
-                   'line_items.item_type = 1 and line_items.user_id != ? and line_items.owner_id = ?',
+                   'line_items.item_type = 1 and line_items.user_id != ? and line_items.item_owner_id = ?',
                    @current_user.id, @current_user.id
                  )
                when 'borrowed'
                  Product.joins(:line_items).where(
-                   'line_items.item_type = 2 and line_items.user_id = ? and line_items.owner_id != ?',
+                   'line_items.item_type = 2 and line_items.user_id = ? and line_items.item_owner_id != ?',
                    @current_user.id, @current_user.id
                  )
                when 'lent'
                  Product.joins(:line_items).where(
-                   'line_items.item_type = 2 and line_items.user_id != ? and line_items.owner_id = ?',
+                   'line_items.item_type = 2 and line_items.user_id != ? and line_items.item_owner_id = ?',
                    @current_user.id, @current_user.id
                  )
                else
                  []
                end
-    render json: products.as_json, status: :ok
+    render json: {
+      message: 'Successfully fetched',
+      data: products.as_json
+    }, status: :ok
+  rescue StandardError => e
+    Rails.logger.error("Product purchase/rent API failed: #{e.message}")
+    render json: failed_response(e.message), status: :unprocessable_entity
   end
 
   def line_items
