@@ -141,7 +141,7 @@ class Api::V1::ProductsController < ApplicationController
                end
     render json: {
       message: 'Successfully fetched',
-      data: products.as_json
+      data: products.distinct.as_json
     }, status: :ok
   rescue StandardError => e
     Rails.logger.error("Product purchase/rent API failed: #{e.message}")
@@ -154,17 +154,19 @@ class Api::V1::ProductsController < ApplicationController
 
     buy_price = line_item_params[:item_type] == 'buy' ? product.price : 0.0
     rent_price = line_item_params[:item_type] == 'rent' ? product.rental_price : 0.0
+    rent_type = line_item_params[:item_type] == 'rent' ? product.price_option : nil
     params = line_item_params.merge!(
       user_id: @current_user.id,
       item_owner_id: product.created_by,
       buy_price:,
-      rent_price:
+      rent_price:,
+      rent_type:
     )
     LineItem.create!(params)
     render json: {
       message: "Successfully product is #{line_item_params[:item_type]}",
       data: nil
-    }, status: :ok
+    }, status: :created
   rescue StandardError => e
     Rails.logger.error("Product #{line_item_params[:item_type]} API failed: #{e.message}")
     render json: failed_response(e.message), status: :unprocessable_entity
@@ -188,8 +190,7 @@ class Api::V1::ProductsController < ApplicationController
       :product_id,
       :item_type,
       :rental_time_start,
-      :rental_time_end,
-      :rent_type
+      :rental_time_end
     )
   end
 
