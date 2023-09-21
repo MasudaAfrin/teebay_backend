@@ -7,4 +7,4 @@ Things you may want to cover:
 * To Run: docker compose up
 * To access the container - docker exec -it teebay_backend-teebay-rails-1 bash
 * Documentation - https://documenter.getpostman.com/view/13503617/2s9YC4VZ7n
-* Video URL: https://drive.google.com/file/d/18dt5XNlRuXVuQVEkm9hKc_XN0ZaNLIqb/view
+* Video URL: (https://drive.google.com/file/d/1y-dJ8B38PN624miDelATe85FqDeDb-Sj/view)https://drive.google.com/file/d/1y-dJ8B38PN624miDelATe85FqDeDb-Sj/view
