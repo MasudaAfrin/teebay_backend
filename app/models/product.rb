@@ -1,4 +1,6 @@
 class Product < ApplicationRecord
+  belongs_to :owner, class_name: 'User', foreign_key: :created_by
+
   validates :title, :product_categories, :price, :price_option, presence: true
 
   scope :search_by_title, -> (title) { where('lower(title) LIKE ?', "%#{title.downcase}%") }
