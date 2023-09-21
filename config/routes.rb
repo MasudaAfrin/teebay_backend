@@ -11,6 +11,8 @@ Rails.application.routes.draw do
         get :category_options, path: '/category-options', on: :collection
         get :price_options, path: '/price-options', on: :collection
         get :list, on: :collection
+        get :my_products, path: '/my-products', on: :collection
+        post :line_items, path: '/line-items', on: :collection
       end
     end
   end
