@@ -1,4 +1,5 @@
 class Product < ApplicationRecord
+  has_many :line_items
   belongs_to :owner, class_name: 'User', foreign_key: :created_by
 
   validates :title, :product_categories, :price, :price_option, presence: true
